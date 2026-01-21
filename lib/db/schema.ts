@@ -1,7 +1,7 @@
-import { create } from "domain";
-import { is, relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index, pgEnum, uuid} from "drizzle-orm/pg-core";
-import { isAbsolute } from "path";
+
+import {  relations } from "drizzle-orm";
+import { pgTable, text, timestamp, boolean, index, pgEnum, uuid,date} from "drizzle-orm/pg-core";
+
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -106,7 +106,7 @@ export const emotionEnum = pgEnum("emotion", [
     "JOIE",
     "TRISTE",
     "EN_COLERE",
-    "ANXIEUXEUSE",
+    "ANXIEUSE",
     "FATIGUEE",
   "RECONNAISSANTE",
   "EN_PAIX",
@@ -120,9 +120,9 @@ export const emotionEnum = pgEnum("emotion", [
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    title: text("title").notNull(),
-    content: text("content").notNull(),
-    emotion: emotionEnum("emotion"),
+    content: text("content"),
+    emotion: emotionEnum("emotion").notNull(),
+    entryDate: date("entry_date").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .$onUpdate(() => new Date())
@@ -180,6 +180,7 @@ export const bibleVerse = pgTable("bible_verse", {
   chapter: text("chapter").notNull(),
   verse: text("verse").notNull(),
   content : text("content").notNull(),
+  type: text("type").notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
