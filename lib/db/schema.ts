@@ -115,19 +115,22 @@ export const emotionEnum = pgEnum("emotion", [
   "STRESSEE",
 ]);
 
-  export const journalEntry = pgTable("journal_entry", {
-    id: uuid ("id").primaryKey(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    content: text("content"),
-    emotion: emotionEnum("emotion").notNull(),
-    entryDate: date("entry_date").notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at")
-      .$onUpdate(() => new Date())
-      .notNull(),
-  }, (table) => [index("journalEntry_userId_idx").on(table.userId)]);
+ export const journalEntry = pgTable("journal_entry", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  content: text("content"),
+  emotion: emotionEnum("emotion").notNull(),
+  entryDate: date("entry_date").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .$onUpdate(() => new Date())
+    .notNull(),
+}, (table) => [
+  index("journalEntry_userId_idx").on(table.userId),
+]);
+
   
   export const prayer= pgTable("prayer" , {
     id: uuid ("id").primaryKey().defaultRandom(),
@@ -184,6 +187,7 @@ export const bibleVerse = pgTable("bible_verse", {
   isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
-    .$onUpdate(() => new Date())
-    .notNull(), 
+  .defaultNow()
+  .$onUpdate(() => new Date())
+  .notNull(),
 },(table) => [index("bibleVerse_emotion_idx").on(table.emotion)]);

@@ -20,14 +20,15 @@ export const  mood = async (formData: FormData) => {
   
   const choosenMood = await dailyMood(db, {userId, date:today});
 
- if (choosenMood){
+  if (choosenMood){
     redirect('/');
-
- }
-  await db.insert(journalEntry)
+    }
+  
+    await db.insert(journalEntry)
   .values({
     userId: userId,
     emotion: emotion,
+    content: "",
     entryDate: today,
   });
   redirect('/');
