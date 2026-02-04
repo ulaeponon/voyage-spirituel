@@ -4,6 +4,7 @@ import { db } from "@/lib/db/drizzle";
 import { action, bibleVerse, goals, journalEntry } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import {  emotionUI } from "@/lib/emotions";
+import { redirect } from "next/navigation";
 
 
 
@@ -22,7 +23,7 @@ export default  async function Home() {
     eq(journalEntry.entryDate, today)
   ));
   if(!entry){
-    return null;
+   redirect("/mood");
   }
   const [message] = await db
   .select()
