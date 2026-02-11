@@ -1,6 +1,6 @@
 
 import { journalEntry} from "./db/schema"
-import { and, eq } from "drizzle-orm"
+import { and, eq, sql } from "drizzle-orm"
 
 
 type DailyMoodProps = {
@@ -14,7 +14,7 @@ const result = await db
     .from(journalEntry)
     .where(
         and(eq(journalEntry.userId, userId),
-        eq(journalEntry.entryDate,date)
+        sql`DATE(${journalEntry.createdAt}) = ${date}`
     )).limit(1);
 
     return result.length > 0 ;

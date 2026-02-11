@@ -2,7 +2,7 @@
 import { getSession } from "./actions/session";
 import { db } from "@/lib/db/drizzle";
 import { action, bibleVerse, goals, journalEntry } from "@/lib/db/schema";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import {  emotionUI } from "@/lib/emotions";
 import { redirect } from "next/navigation";
 
@@ -19,9 +19,10 @@ export default  async function Home() {
   .from(journalEntry)
   .where(
     and(
-    eq(journalEntry.userId, session.id),
-    eq(journalEntry.entryDate, today)
-  ));
+      eq(journalEntry.userId, session.id),
+      sql`date(${journalEntry.createdAt}) = ${today}`
+    )
+  );
   if(!entry){
    redirect("/mood");
   }

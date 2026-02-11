@@ -29,7 +29,6 @@ export const  mood = async (formData: FormData) => {
     userId: userId,
     emotion: emotion,
     content: "",
-    entryDate: today,
   });
   redirect('/');
 }

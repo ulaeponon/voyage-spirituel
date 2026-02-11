@@ -120,9 +120,8 @@ export const emotionEnum = pgEnum("emotion", [
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  content: text("content"),
-  emotion: emotionEnum("emotion").notNull(),
-  entryDate: date("entry_date").notNull(),
+  content: text("content").notNull(),
+  emotion: emotionEnum("emotion"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .$onUpdate(() => new Date())
