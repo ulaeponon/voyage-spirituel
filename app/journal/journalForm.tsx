@@ -12,10 +12,20 @@ import { useRouter } from "next/navigation";
          router.refresh(); // Rafraîchir la page après sauvegarde
     }
     return(
-        <main className="p-4">
-            <h1 className="text-2xl font-bold">Journal Page</h1>
-            <textarea className="w-full h-64 mt-4 p-2 border rounded" placeholder="Ecris ce que tu ressens aujourd'hui..." value={journalEntry} onChange={(e) => setJournalEntry(e.target.value)}></textarea>
-            <button className="mt-4 bg-blue-500 text-white p-2 rounded" onClick={handleSaveEntry} disabled={!journalEntry.trim()}>Sauvegarder</button>
-        </main>
+        <div className="bg-white rounded-2xl shadow-sm p-8 space-y-6">
+            <h2 className="text-xl font-semibold text-[#2F2F2F]"> Écris ton moment</h2>
+            <textarea className="w-full h-48 resize-none rounded-xl border border-gray-200 bg-[#FDFCF9] p-4 text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D6B98C] transition"  
+             placeholder="Ecris ce que tu ressens aujourd'hui..." value={journalEntry} onChange={(e) => setJournalEntry(e.target.value)}></textarea>
+           <div className="flex justify-end">
+      <button
+        className=" px-6 py-2 rounded-full bg-[#D6B98C] text-black text-sm font-medium transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+        onClick={handleSaveEntry}
+        disabled={!journalEntry.trim()}
+      >
+        Sauvegarder
+      </button>
+    </div>
+
+        </div>
     )
  }

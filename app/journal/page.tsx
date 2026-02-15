@@ -1,9 +1,9 @@
-
 import { journalEntry } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { getSession } from "../actions/session";
 import { db } from "@/lib/db/drizzle";
 import JournalForm from "./journalForm";
+import JournalList from "../components/JournalList";
 
 
  export default async function JournalPage() {
@@ -12,26 +12,27 @@ import JournalForm from "./journalForm";
             throw new Error("Utilisateur non authentifié");}    
     
    
-    const entries = await db
+  const allEntries = await db
   .select()
   .from(journalEntry)
-  .where(eq(journalEntry.userId, session.id));
+  .where(eq(journalEntry.userId, session.id))
+  .orderBy(desc(journalEntry.createdAt));
 
+const entriesWithContent = allEntries.filter(
+  (entry) => entry.content && entry.content.trim() !== ""
+);
     return(
-    <div>
+    <div className="min-h-screen bg-[#F9F7F3] px-6 py-12">
+        <div className="max-w-2xl mx-auto space-y-10">
         <JournalForm/>
-     <div>
-            <h1>Mes entrées de journal</h1>
-            { entries.length === 0 ? (
-                <p>Aucune entrée de journal disponible.</p>
-            ) : (
-                entries.map(entry => (
-                    <div key={entry.id}>
-                        <p>{entry.content}</p>
-                    </div>
-                ))
-            )}
-        </div>
-        </div>
+    <h1 className="text-2xl font-semibold text-[#2F2F2F]">Mes entrées de journal</h1>
+
+{entriesWithContent.length === 0 && (
+  <p className="text-gray-500 text-sm">Aucune entrée de journal disponible.</p>
+)}
+
+<JournalList entries={entriesWithContent} />
+      </div> 
+       </div>
     )
  }
