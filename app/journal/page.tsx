@@ -1,9 +1,9 @@
-
 import { journalEntry } from "@/lib/db/schema";
 import { desc, eq } from "drizzle-orm";
 import { getSession } from "../actions/session";
 import { db } from "@/lib/db/drizzle";
 import JournalForm from "./journalForm";
+import JournalList from "../components/JournalList";
 
 
  export default async function JournalPage() {
@@ -22,23 +22,17 @@ const entriesWithContent = allEntries.filter(
   (entry) => entry.content && entry.content.trim() !== ""
 );
     return(
-    <div>
+    <div className="min-h-screen bg-[#F9F7F3] px-6 py-12">
+        <div className="max-w-2xl mx-auto space-y-10">
         <JournalForm/>
-    <h1>Mes entrées de journal</h1>
+    <h1 className="text-2xl font-semibold text-[#2F2F2F]">Mes entrées de journal</h1>
 
 {entriesWithContent.length === 0 && (
-  <p>Aucune entrée de journal disponible.</p>
+  <p className="text-gray-500 text-sm">Aucune entrée de journal disponible.</p>
 )}
 
-{entriesWithContent.length > 0 && (
-  <div>
-    {entriesWithContent.map((entry) => (
-      <div key={entry.id}>
-        <p>{entry.content}</p>
-      </div>
-    ))}
-  </div>
-)}
-        </div>
+<JournalList entries={entriesWithContent} />
+      </div> 
+       </div>
     )
  }

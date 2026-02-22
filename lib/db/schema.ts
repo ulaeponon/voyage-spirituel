@@ -9,7 +9,8 @@ export const user = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  role: text("role").default("USER").notNull(),
+ createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
     .$onUpdate(() =>  new Date())
@@ -190,3 +191,15 @@ export const bibleVerse = pgTable("bible_verse", {
   .$onUpdate(() => new Date())
   .notNull(),
 },(table) => [index("bibleVerse_emotion_idx").on(table.emotion)]);
+
+export const prayerTemplate = pgTable("prayer_template", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  emotion: emotionEnum("emotion").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  isPremium: boolean("is_premium").default(false).notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+},(table) => [index("prayerTemplate_emotion_idx").on(table.emotion)]);
