@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { generatePrayer } from "../actions/prayer";
+import { getTodayPrayer } from "../actions/prayer";
 
 type Props = {
 	userId: string;
@@ -12,7 +12,7 @@ export default function PrayerUI({ userId }: Props) {
     const [loading, setLoading] = useState(false);
     const handleGeneratePrayer = async () => {
         setLoading(true);
-        const prayer = await generatePrayer(userId);
+        const prayer = await getTodayPrayer(userId);
         setPrayerText(prayer);
         setLoading(false);
     }
