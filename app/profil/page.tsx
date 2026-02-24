@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "../actions/session";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 export default async function profilPage(){
 const session =  await getSession();
@@ -8,6 +9,8 @@ if(!session?.id){
   redirect("/connection");
 }
   return(
+    <>
+    <Navbar />
     <main className="min-h-screen flex flex-col p-6 text-zinc-900 dark:text-zinc-100">
       <h1 className="text-xl font-semibold mb-8">Profil</h1>
       <p>Bienvenue sur votre page de profil.</p>
@@ -24,6 +27,7 @@ if(!session?.id){
   </Link>
       </section>
     </main>
+    </>
   )  
        
     

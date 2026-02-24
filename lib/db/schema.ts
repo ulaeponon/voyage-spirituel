@@ -116,13 +116,16 @@ export const emotionEnum = pgEnum("emotion", [
   "STRESSEE",
 ]);
 
+// Enum for prayer types
+export const prayerTypeEnum = pgEnum("prayer_type", ["USER", "TEMPLATE", "AI"]);
+
  export const journalEntry = pgTable("journal_entry", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
   content: text("content").notNull(),
-  emotion: emotionEnum("emotion"),
+  emotion: emotionEnum("emotion").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .$onUpdate(() => new Date())
@@ -137,7 +140,7 @@ export const emotionEnum = pgEnum("emotion", [
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    type: text("type"),
+   type: prayerTypeEnum("type"),
     content: text("content").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")

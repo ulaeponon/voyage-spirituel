@@ -5,6 +5,7 @@ import { action, bibleVerse, goals, journalEntry } from "@/lib/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import {  emotionUI } from "@/lib/emotions";
 import { redirect } from "next/navigation";
+import Navbar from "./components/Navbar";
 
 
 
@@ -55,6 +56,8 @@ export default  async function Home() {
   )
   .orderBy(action.dueDate)
   return (
+    <>
+    <Navbar />
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <h1>Hello </h1>
@@ -91,5 +94,6 @@ export default  async function Home() {
 }
 </section>
     </div>
+    </>
   );
 }
