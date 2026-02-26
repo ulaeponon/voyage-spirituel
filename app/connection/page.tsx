@@ -45,22 +45,20 @@ const errorMessages: Record<string, string> = {
   "generic": "Une erreur est survenue. Réessayez.",
 };
   return (
-  <main className="min-h-screen bg-white relative">
+  <main className="min-h-screen bg-[#F3F2F7] flex items-center justify-center">
       
       {/* IMAGE HEADER - Fixée en haut */}
-      <div className="relative h-[55vh] w-full overflow-hidden">
+<div className="w-full max-w-105 bg-white rounded-[40px] shadow-2xl overflow-hidden">
+      <div className="relative h-70 w-full">
         <img
           src="/images/Cover-image.png"
           alt="Voyage spirituel"
           className="h-full w-full object-cover"
         />
-        {/* Overlay gradient pour transition douce */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/30" />
-      </div>
+          </div>
 
       {/* CONTENEUR POUR LA CARTE - Positionné pour chevaucher l'image */}
-      <div className="relative -mt-32 px-0 pb-12">
-  <div className="max-w-md mx-auto bg-white rounded-t-[40px] shadow-xl px-8 pt-10 pb-10">
+  <div className="relative -mt-14 bg-white rounded-t-[40px] px-8 pt-10 pb-12">
           <h2 className="text-3xl font-bold text-gray-900 text-center">
             Bienvenue
           </h2>
