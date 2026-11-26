@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { signup, login } from "../actions/connection";
 import useAuthForm from "./useAuthForm";
+import PasswordInput from "../components/PasswordInput";
+import { authClient } from "@/lib/auth-client";
 
 export default function ConnectionPage() {
   const { mode, form,error,setError, updateForm, changeMode , validateForm } = useAuthForm();
@@ -126,29 +128,32 @@ const errorMessages: Record<string, string> = {
               className="w-full bg-gray-100 rounded-2xl px-4 py-3 text-sm text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
 
-            <input
-              name="password"
-              type="password"
-              placeholder="Mot de passe"
-              value={form.password}
-              onChange={(e) => updateForm("password", e.target.value)}
-              className="w-full bg-gray-100 rounded-2xl px-4 py-3 text-sm text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+           <PasswordInput 
+           name="password" 
+           placeholder="Mot de passe"
+           value={form.password}
+           onChange={(value) => updateForm("password", value)}
             />
-
             {mode === "signup" && (
-              <input
+              <PasswordInput
                 name="confirmPassword"
-                type="password"
                 placeholder="Confirmer le mot de passe"
                 value={form.confirmPassword}
-                onChange={(e) => updateForm("confirmPassword", e.target.value)}
-                className="w-full bg-gray-100 rounded-2xl px-4 py-3 text-sm text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"/>
+                onChange={(value) => updateForm("confirmPassword", value)}
+              />
             )}
 
             <button
               type="submit"
               className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all">
               {mode === "login" ? "Entrer" : "Commencer"}
+            </button>
+            <button
+            type="button"
+            onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/mood" })}
+              className="w-full mt-3 bg-gray-200 text-gray-800 py-3 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
+              continuer avec Google
             </button>
           </form>
         </div>

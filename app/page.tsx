@@ -6,6 +6,7 @@ import { and, eq, sql } from "drizzle-orm";
 import {  emotionUI } from "@/lib/emotions";
 import { redirect } from "next/navigation";
 import Navbar from "./components/Navbar";
+import Link from "next/link";
 
 
 
@@ -58,42 +59,55 @@ export default  async function Home() {
   return (
     <>
     <Navbar />
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <h1>Hello </h1>
-        <p>Aujourd'hui, tu te sens</p>
+    <div className="min-h-screen bg-linear-to-br from-[#102c48] via-[#8874a8] to-[#d4be95] font-sans">
+      <main className="w-full max-w-md mx-auto px-6 py-10 pb-32 flex flex-col gap-10">
+       <div className="rounded-3xl bg-white/20 backdrop-blur-md p-8 shadow-lg text-center">
+        <h1 className="text-2xl font-semibold text-[#493673]">Hello {session.name}</h1>
+        <p className="text-sm text-[#493673]/70">Aujourd'hui, tu te sens</p>
+        <div className="text-5xl my-4">
         <span>{icon}</span>
-        <strong>{label}</strong>
-      </main>
-      <section>
-  <h2>Pour t’accompagner aujourd’hui</h2>
+        </div>
+        <strong className="text-2xl font-medium text-[#493673]">{label}</strong>
+        </div>
+      
+      <Link href= "/prayer">
+      <section className="rounded-3xl bg-white/25 backdrop-blur-md p-7 shadow-md  hover:bg-white/35 hover:shadow-lg hover:scale-[1.02] 
+    transition-all duration-200 cursor-pointer border border-white/20">
+  <h2 className="text-lg font-lg  text-[#493673] tracking-wide mb-4">Pour t’accompagner aujourd’hui</h2>
 {message ? (
     <>
-      <p>“{message.content}”</p>
-      <small>
+      <p className="italic text-[#102c48] leading-relaxed">“{message.content}”</p>
+      <small  className="block mt-2 text-[#493673]/70">
         {message.book} {message.chapter}:{message.verse}
       </small>
     </>
   ) : (
-    <p>
-      Prends un moment de calme et de réflexion pour bien commencer ta journée.
+    <p className="italic text-[#102c48]">
+     " Prends un moment de calme et de réflexion pour bien commencer ta journée."
     </p>
   )}
 </section>
-<section>
-  <h2>Objectifs du jour & actions pour les atteindre</h2>
-  <p>{goalsOfDay.length >0 ? `${goalsOfDay.length} objectif(s)en cours `:"Aucun objectif pour l'instant"}</p>
+</Link>
+<Link href= "/prayer">
+<section className="rounded-3xl bg-white/20 backdrop-blur-md p-7 shadow-md  hover:bg-white/35 hover:shadow-lg hover:scale-[1.02] 
+    transition-all duration-200 cursor-pointer border border-white/20">
+  <h2 className="text-lg font-medium text-[#493673] tracking-wide mb-4">Objectifs du jour & actions pour les atteindre</h2>
+  <p className="text-[#102c48] mb-5 leading-relaxed">
+    {goalsOfDay.length >0 ? `${goalsOfDay.length} objectif(s)en cours `:"Aucun objectif pour l'instant"}</p>
 {nextAction ? (
-<div>
-  <p> Prochaine action :</p>
-  <strong>{nextAction.title}</strong>
+<div className="bg-[#d4be95]/30 rounded-2xl p-4">
+  <p className="text-sm text-[#493673]/70"> Prochaine action :</p>
+  <strong className="text-[#493673]">{nextAction.title}</strong>
 </div>
-):(<p>
+):(<p  className="text-[#493673]/70 italic">
   Aucune action planifiée pour aujourd'hui
 </p>)
 }
 </section>
+</Link>
+ </main>
     </div>
+   
     </>
   );
 }

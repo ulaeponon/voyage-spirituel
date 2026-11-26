@@ -18,15 +18,15 @@
   { label: string; icon: string }
 > = {
   JOIE: {
-    label: "Joie",
+    label: "En joie",
     icon: "😊",
   },
   TRISTE: {
-    label: "Tristesse",
+    label: "Triste",
     icon: "😔",
   },
   EN_COLERE: {
-    label: "Colère",
+    label: "En colère",
     icon: "😡",
   },
   ANXIEUSE: {
